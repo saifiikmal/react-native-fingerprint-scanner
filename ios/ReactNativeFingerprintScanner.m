@@ -55,10 +55,11 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
         context.localizedFallbackTitle = @"";
     }
 
+    NSInteger policy = fallbackEnabled ? LAPolicyDeviceOwnerAuthentication : LAPolicyDeviceOwnerAuthenticationWithBiometrics;
     // Device has FingerprintScanner
-    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
+    if ([context canEvaluatePolicy:policy error:&error]) {
         // Attempt Authentication
-        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+        [context evaluatePolicy:policy
                 localizedReason:reason
                           reply:^(BOOL success, NSError *error)
          {
